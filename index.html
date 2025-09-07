@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contoh Input Email: jasteb/unchek</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 24px; background:#f7f7fb; color:#111; }
+    .card { background:white; padding:20px; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06); max-width:520px; margin:auto; }
+    label { display:block; margin-bottom:6px; font-weight:600; }
+    input[type="email"], input[type="text"] { width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; }
+    .row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+    .actions { margin-top:16px; display:flex; gap:8px; }
+    button { padding:8px 12px; border-radius:8px; border:0; cursor:pointer; background:#2563eb; color:white; }
+    button.secondary { background:#6b7280; }
+    pre { background:#f1f5f9; padding:12px; border-radius:8px; overflow:auto; }
+  </style>
+</head>
+<body>
+  <div class="card" role="main">
+    <h2>Form contoh</h2>
+    <p>Field email otomatis terisi dengan <code>jasteb/unchek</code>. Checkbox dibiarkan <strong>unchecked</strong>.</p>
+
+    <!-- novalidate supaya browser tidak memaksa format email -->
+    <form id="demoForm" novalidate>
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" value="jasteb/unchek" aria-describedby="emailHelp" />
+
+      <div class="row" style="margin-top:10px;">
+        <input id="remember" name="remember" type="checkbox" />
+        <label for="remember" style="margin:0; font-weight:500;">Remember me (unchecked)</label>
+      </div>
+
+      <div class="actions">
+        <button type="submit">Submit</button>
+        <button type="button" class="secondary" id="resetBtn">Reset ke default</button>
+        <button type="button" class="secondary" id="toggleCheckBtn">Toggle checkbox</button>
+      </div>
+    </form>
+
+    <h3 style="margin-top:18px;">Hasil (preview)</h3>
+    <pre id="result">Belum ada submit.</pre>
+  </div>
+
+  <script>
+    const form = document.getElementById('demoForm');
+    const emailInput = document.getElementById('email');
+    const remember = document.getElementById('remember');
+    const result = document.getElementById('result');
+    const resetBtn = document.getElementById('resetBtn');
+    const toggleCheckBtn = document.getElementById('toggleCheckBtn');
+
+    // Default values
+    const DEFAULT_EMAIL = 'jasteb/unchek';
+    const DEFAULT_CHECKED = false;
+
+    // Tampilkan hasil saat submit (tanpa reload)
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = {
+        email: emailInput.value,
+        rememberChecked: remember.checked
+      };
+      result.textContent = JSON.stringify(data, null, 2);
+    });
+
+    // Tombol reset ke default
+    resetBtn.addEventListener('click', () => {
+      emailInput.value = DEFAULT_EMAIL;
+      remember.checked = DEFAULT_CHECKED;
+      result.textContent = 'Direset ke default.';
+    });
+
+    // Toggle checkbox
+    toggleCheckBtn.addEventListener('click', () => {
+      remember.checked = !remember.checked;
+      result.textContent = `Checkbox sekarang: ${remember.checked}`;
+    });
+
+    // Set default on load
+    window.addEventListener('load', () => {
+      emailInput.value = DEFAULT_EMAIL;
+      remember.checked = DEFAULT_CHECKED;
+    });
+  </script>
+</body>
+</html>
